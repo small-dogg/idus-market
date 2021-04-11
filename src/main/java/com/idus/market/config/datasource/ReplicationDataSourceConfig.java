@@ -39,7 +39,7 @@ public class ReplicationDataSourceConfig {
     return routingDataSource;
   }
 
-  public DataSource getDataSource(DataSourceProperty dataSourceProperty){
+  public DataSource getDataSource(DataSourceProperty dataSourceProperty) {
     return DataSourceBuilder.create()
         .type(HikariDataSource.class)
         .url(dataSourceProperty.getUrl())
