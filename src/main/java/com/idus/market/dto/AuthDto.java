@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 public class AuthDto {
-  private String username;
+  private String email;
   private String password;
   @ApiModelProperty(hidden=true)
   private String roles;
