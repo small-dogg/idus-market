@@ -32,15 +32,15 @@ public class TokenProvider {
     Map<String, Object> headerClaims = new HashMap<>();
     headerClaims.put("type", "JWT");
     Map<String, Object> claims = new HashMap<>();
-    claims.put("username", principalDetails.getUsername());
+    claims.put("email", principalDetails.getUser().getEmail());
 
     Date now = new Date();
 
     String token = Jwts.builder()
-        .setSubject(principalDetails.getUsername())
+        .setSubject(principalDetails.getUser().getEmail())
         .setClaims(claims)
         .setExpiration(new Date(now.getTime()+tokenValidTime))
-        .setIssuer(principalDetails.getUsername())
+        .setIssuer(principalDetails.getUser().getEmail())
         .setIssuedAt(now)
         .setHeader(headerClaims)
         .signWith(SignatureAlgorithm.HS512, this.keyHMAC)
