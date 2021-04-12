@@ -36,6 +36,7 @@ public class SwaggerConfig {
 
     docket.apiInfo(apiInfo)
         .ignoredParameterTypes(Errors.class)
+        .securityContexts(Arrays.asList(securityContext()))
         .securitySchemes(Arrays.asList(apiKey()));
 
     return docket.select()
@@ -44,9 +45,19 @@ public class SwaggerConfig {
         .build();
   }
 
+  private SecurityContext securityContext() {
+    return SecurityContext.builder().securityReferences(defaultAuth()).build();
+  }
+
+  private List<SecurityReference> defaultAuth() {
+    AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
+    AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+    authorizationScopes[0] = authorizationScope;
+    return Arrays.asList(new SecurityReference("bearer", authorizationScopes));
+  }
 
   private ApiKey apiKey() {
-    return new ApiKey("Bearer {accessToken}", "X-Auth-Token", "header");
+    return new ApiKey("bearer", "X-Auth-Token", "header");
   }
 
 }

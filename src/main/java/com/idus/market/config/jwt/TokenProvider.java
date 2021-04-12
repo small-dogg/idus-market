@@ -23,6 +23,7 @@ public class TokenProvider {
 
   private final PrincipalDetailsService principalDetailsService;
   private final TokenService tokenService;
+  private long tokenValidTime = 20 * 60 * 1000L;
 
   private transient byte[] keyHMAC = "A&'/}Z57M(2hNg=;LE?~]YtRMS5(yZ<vcZTA3N-($>2j:ZeX-BGftaVk`)jKP~q?,jk)EMbgt*kW'("
       .getBytes(StandardCharsets.UTF_8);
@@ -33,30 +34,24 @@ public class TokenProvider {
     Map<String, Object> claims = new HashMap<>();
     claims.put("username", principalDetails.getUsername());
 
-    Calendar c = Calendar.getInstance();
-    Date now = c.getTime();
-    c.add(Calendar.MINUTE, 1);
-    Date expirationDate = c.getTime();
+    Date now = new Date();
 
     String token = Jwts.builder()
-        .setSubject("login")
-        .setExpiration(expirationDate)
+        .setSubject(principalDetails.getUsername())
+        .setClaims(claims)
+        .setExpiration(new Date(now.getTime()+tokenValidTime))
         .setIssuer(principalDetails.getUsername())
         .setIssuedAt(now)
-        .setNotBefore(now)
-        .setClaims(claims)
         .setHeader(headerClaims)
         .signWith(SignatureAlgorithm.HS512, this.keyHMAC)
         .compact();
-
     tokenService.createToken(token);
-
     return token;
   }
 
   public Authentication getAuthentication(String token) {
-    String subject = Jwts.parser().setSigningKey(keyHMAC).parseClaimsJws(token).getBody()
-        .getSubject();
+    String subject = (String) Jwts.parser().setSigningKey(keyHMAC).parseClaimsJws(token).getBody()
+        .get("username");
     PrincipalDetails principalDetails = (PrincipalDetails) principalDetailsService
         .loadUserByUsername(subject);
     principalDetails.setToken(token);
@@ -66,12 +61,14 @@ public class TokenProvider {
   }
 
   public boolean validateToken(String token) {
-    return false;
+    return tokenService.validateToken(token);
   }
 
   public String resolveToken(HttpServletRequest request) {
     String xAuthToken = request.getHeader("X-Auth-Token");
-    //TODO Request로부터 토큰정보를 정상적으로 받아올 수 없는 이슈 있음 "/api/v1/auth를 제외한 나머지 대상들은 헤더정보에 Token값을 작성하여 정상 전달되도록 조치필요
-    return "";
+    if (xAuthToken == null || xAuthToken == "") {
+      return null;
+    }
+    return xAuthToken.split(" ")[1];
   }
 }

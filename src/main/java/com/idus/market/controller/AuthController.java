@@ -9,9 +9,10 @@ import com.idus.market.dto.AuthDto;
 import com.idus.market.dto.UserDto;
 import com.idus.market.service.AuthService;
 import com.idus.market.service.UserService;
-import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.annotations.ApiOperation;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +29,7 @@ public class AuthController {
   private final TokenService tokenService;
 
   @PostMapping("login")
-  @Operation(summary = "로그인", description = "회원 로그인을 수행합니다.")
+  @ApiOperation(value = "로그인", notes = "회원 로그인을 수행합니다.")
   public CommonResponse login(AuthDto authDto) {
     PrincipalDetails principalDetails;
     try {
@@ -40,6 +41,7 @@ public class AuthController {
           .message(loginFailedException.getMessage())
           .build();
     }
+
     String token = tokenProvider.createToken(principalDetails);
 
     return CommonResponse.builder()
@@ -50,9 +52,9 @@ public class AuthController {
   }
 
   @PostMapping("logout")
-  @Operation(summary = "로그아웃", description = "회원 로그아웃을 수행합니다.")
+  @ApiOperation(value = "로그아웃", notes = "회원 로그아웃을 수행합니다.")
   public CommonResponse logout(String token) {
-    if(tokenService.deleteToken(token)){
+    if(!tokenService.deleteToken(token)){
       return CommonResponse.builder()
           .code("TOKEN_EXPIRED_ERROR")
           .status(400)
@@ -67,7 +69,7 @@ public class AuthController {
   }
 
   @PostMapping("join")
-  @Operation(summary = "회원가입", description = "회원 가입을 수행합니다.")
+  @ApiOperation(value = "회원가입", notes = "회원 가입을 수행합니다.")
   public CommonResponse join(@Valid UserDto userDto, Errors errors) {
     if (errors.hasErrors()) {
       return CommonResponse.builder()
