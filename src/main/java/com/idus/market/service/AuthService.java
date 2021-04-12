@@ -30,7 +30,7 @@ public class AuthService {
 
   @Transactional(readOnly = true)
   public PrincipalDetails login(AuthDto authDto) {
-    Optional<User> user = userRepository.findByUsername(authDto.getUsername());
+    Optional<User> user = userRepository.findByEmail(authDto.getEmail());
 
     if (!user.isPresent()) {
       throw new LoginFailedException();
