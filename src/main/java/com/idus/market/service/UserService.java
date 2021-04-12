@@ -2,7 +2,6 @@ package com.idus.market.service;
 
 import com.idus.market.domain.user.User;
 import com.idus.market.domain.user.UserRepository;
-import com.idus.market.dto.UserDto;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;

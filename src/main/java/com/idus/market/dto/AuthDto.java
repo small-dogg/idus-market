@@ -5,10 +5,11 @@ import lombok.Data;
 
 @Data
 public class AuthDto {
+
   private String username;
   private String password;
-  @ApiModelProperty(hidden=true)
+  @ApiModelProperty(hidden = true)
   private String roles;
-  @ApiModelProperty(hidden=true)
+  @ApiModelProperty(hidden = true)
   private String token;
 }

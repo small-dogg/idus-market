@@ -12,7 +12,6 @@ import com.idus.market.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,7 +33,7 @@ public class AuthController {
     PrincipalDetails principalDetails;
     try {
       principalDetails = authService.login(authDto);
-    }catch (LoginFailedException loginFailedException){
+    } catch (LoginFailedException loginFailedException) {
       return CommonResponse.builder()
           .code("LOGIN_ERROR")
           .status(401)
@@ -54,7 +53,7 @@ public class AuthController {
   @PostMapping("logout")
   @ApiOperation(value = "로그아웃", notes = "회원 로그아웃을 수행합니다.")
   public CommonResponse logout(String token) {
-    if(!tokenService.deleteToken(token)){
+    if (!tokenService.deleteToken(token)) {
       return CommonResponse.builder()
           .code("TOKEN_EXPIRED_ERROR")
           .status(400)
@@ -79,8 +78,8 @@ public class AuthController {
           .build();
     }
 
-    if(userService.findByEmail(userDto.getEmail()).isPresent() ||
-        userService.findByUsername(userDto.getUsername()).isPresent()){
+    if (userService.findByEmail(userDto.getEmail()).isPresent() ||
+        userService.findByUsername(userDto.getUsername()).isPresent()) {
       return CommonResponse.builder()
           .code("REGISTERED_ERROR")
           .status(400)

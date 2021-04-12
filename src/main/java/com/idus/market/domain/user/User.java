@@ -48,13 +48,6 @@ public class User extends BaseTimeEntity {
   @Column(length = 8)
   private GenderType gender;
 
-  public List<String> getRoleList() {
-    if (this.role.length() > 0) {
-      return Arrays.asList(this.role.split(","));
-    }
-    return new ArrayList<>();
-  }
-
   public User(UserDto userDto) {
     this.username = userDto.getUsername();
     this.nick = userDto.getNick();
@@ -63,5 +56,12 @@ public class User extends BaseTimeEntity {
     this.email = userDto.getEmail();
     this.role = userDto.getRoles();
     this.gender = userDto.getGender();
+  }
+
+  public List<String> getRoleList() {
+    if (this.role.length() > 0) {
+      return Arrays.asList(this.role.split(","));
+    }
+    return new ArrayList<>();
   }
 }

@@ -46,19 +46,19 @@ public class UserDto {
   @ApiModelProperty(hidden = true)
   private String roles;
 
-  public void setRoles(String roles) {
-    this.roles = roles;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
   public static UserDto of(User user) {
     return UserDto.builder()
         .username(user.getUsername())
         .email(user.getEmail())
         .roles(user.getRole())
         .build();
+  }
+
+  public void setRoles(String roles) {
+    this.roles = roles;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
   }
 }

@@ -15,10 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Configuration
 public class TokenService {
 
+  private final StringRedisTemplate redisTemplate;
   private transient byte[] keyHMAC = "A&'/}Z57M(2hNg=;LE?~]YtRMS5(yZ<vcZTA3N-($>2j:ZeX-BGftaVk`)jKP~q?,jk)EMbgt*kW'("
       .getBytes(StandardCharsets.UTF_8);
-
-  private final StringRedisTemplate redisTemplate;
 
   @Transactional
   public boolean createToken(String token) {

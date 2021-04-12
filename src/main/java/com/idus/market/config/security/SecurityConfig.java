@@ -1,6 +1,7 @@
 package com.idus.market.config.security;
 
 //import com.idus.market.config.jwt.JwtAuthenticationFilter;
+
 import com.idus.market.config.jwt.JwtAuthenticationFilter;
 import com.idus.market.config.jwt.TokenProvider;
 import java.util.HashMap;
@@ -46,7 +47,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .addFilter(corsFilter)
         .formLogin().disable()
         .httpBasic().disable()
-        .addFilterBefore(new JwtAuthenticationFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class)
+        .addFilterBefore(new JwtAuthenticationFilter(tokenProvider),
+            UsernamePasswordAuthenticationFilter.class)
         .authorizeRequests()
         .antMatchers("/api/**/auth/**").permitAll()
         .antMatchers("/api/**").hasAnyRole("ROLE_ADMIN", "ROLE_USER")
