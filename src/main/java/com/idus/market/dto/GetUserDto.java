@@ -3,6 +3,7 @@ package com.idus.market.dto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import org.springframework.data.domain.Sort.Direction;
 
 @Getter
 @Builder
@@ -10,8 +11,12 @@ import lombok.Getter;
 //todo Renaming
 public class GetUserDto {
 
-  private String username;
-  private String email;
+  private TARGET target;
+  private Direction orderby;
   private int page;
   private int size;
+  public enum TARGET {
+    username, email
+  }
 }
+
