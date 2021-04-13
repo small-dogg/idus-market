@@ -5,7 +5,6 @@ import com.idus.market.config.auth.PrincipalDetailsService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.nio.charset.StandardCharsets;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,7 +38,7 @@ public class TokenProvider {
     String token = Jwts.builder()
         .setSubject(principalDetails.getUser().getEmail())
         .setClaims(claims)
-        .setExpiration(new Date(now.getTime()+tokenValidTime))
+        .setExpiration(new Date(now.getTime() + tokenValidTime))
         .setIssuer(principalDetails.getUser().getEmail())
         .setIssuedAt(now)
         .setHeader(headerClaims)
@@ -51,7 +50,7 @@ public class TokenProvider {
 
   public Authentication getAuthentication(String token) {
     String subject = (String) Jwts.parser().setSigningKey(keyHMAC).parseClaimsJws(token).getBody()
-        .get("username");
+        .get("email");
     PrincipalDetails principalDetails = (PrincipalDetails) principalDetailsService
         .loadUserByUsername(subject);
     principalDetails.setToken(token);

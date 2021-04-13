@@ -5,7 +5,7 @@ import com.idus.market.config.exception.LoginFailedException;
 import com.idus.market.domain.user.User;
 import com.idus.market.domain.user.UserRepository;
 import com.idus.market.dto.AuthDto;
-import com.idus.market.dto.UserDto;
+import com.idus.market.dto.CreateUserDto;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
@@ -14,21 +14,22 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Configuration
+@Transactional(readOnly = true)
 public class AuthService {
 
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
 
   @Transactional
-  public User join(UserDto userDto) {
-    if (userDto.getRoles() == null || userDto.getRoles() == "") {
-      userDto.setRoles("ROLE_USER");
+  public User join(CreateUserDto createUserDto) {
+    if (createUserDto.getRoles() == null || createUserDto.getRoles() == "") {
+      createUserDto.setRoles("ROLE_USER");
     }
-    userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
-    return userRepository.save(new User(userDto));
+    createUserDto.setPassword(passwordEncoder.encode(createUserDto.getPassword()));
+    return userRepository.save(new User(createUserDto));
   }
 
-  @Transactional(readOnly = true)
+
   public PrincipalDetails login(AuthDto authDto) {
     Optional<User> user = userRepository.findByEmail(authDto.getEmail());
 
