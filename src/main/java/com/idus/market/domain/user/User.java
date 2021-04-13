@@ -1,7 +1,7 @@
 package com.idus.market.domain.user;
 
 import com.idus.market.domain.BaseTimeEntity;
-import com.idus.market.dto.UserDto;
+import com.idus.market.dto.CreateUserDto;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,14 +12,12 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Entity(name = "user")
 @Getter
-@Data
 public class User extends BaseTimeEntity {
 
   @Id
@@ -48,14 +46,14 @@ public class User extends BaseTimeEntity {
   @Column(length = 8)
   private GenderType gender;
 
-  public User(UserDto userDto) {
-    this.username = userDto.getUsername();
-    this.nick = userDto.getNick();
-    this.password = userDto.getPassword();
-    this.phoneNumber = userDto.getPhoneNumber();
-    this.email = userDto.getEmail();
-    this.role = userDto.getRoles();
-    this.gender = userDto.getGender();
+  public User(CreateUserDto createUserDto) {
+    this.username = createUserDto.getUsername();
+    this.nick = createUserDto.getNick();
+    this.password = createUserDto.getPassword();
+    this.phoneNumber = createUserDto.getPhoneNumber();
+    this.email = createUserDto.getEmail();
+    this.role = createUserDto.getRoles();
+    this.gender = createUserDto.getGender();
   }
 
   public List<String> getRoleList() {

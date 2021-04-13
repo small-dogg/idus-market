@@ -15,7 +15,7 @@ import lombok.Getter;
 @Getter
 @Builder
 @AllArgsConstructor
-public class UserDto {
+public class CreateUserDto {
 
   @NotBlank(message = "유저명은 공백일 수 없습니다")
   @Size(min = 1, max = 20, message = "유저명의 길이는 최대 20자입니다")
@@ -46,8 +46,8 @@ public class UserDto {
   @ApiModelProperty(hidden = true)
   private String roles;
 
-  public static UserDto of(User user) {
-    return UserDto.builder()
+  public static CreateUserDto of(User user) {
+    return CreateUserDto.builder()
         .username(user.getUsername())
         .email(user.getEmail())
         .roles(user.getRole())

@@ -6,9 +6,11 @@ import com.idus.market.config.exception.LoginFailedException;
 import com.idus.market.config.jwt.TokenProvider;
 import com.idus.market.config.jwt.TokenService;
 import com.idus.market.dto.AuthDto;
-import com.idus.market.dto.UserDto;
+import com.idus.market.dto.CreateUserDto;
 import com.idus.market.service.AuthService;
 import com.idus.market.service.UserService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +31,10 @@ public class AuthController {
 
   @PostMapping("login")
   @ApiOperation(value = "로그인", notes = "회원 로그인을 수행합니다.")
+  @ApiImplicitParams({
+      @ApiImplicitParam(name = "email", value = "이메일", required = true),
+      @ApiImplicitParam(name = "password", value = "비밀번호", required = true)
+  })
   public CommonResponse login(AuthDto authDto) {
     PrincipalDetails principalDetails;
     try {
@@ -52,6 +58,7 @@ public class AuthController {
 
   @PostMapping("logout")
   @ApiOperation(value = "로그아웃", notes = "회원 로그아웃을 수행합니다.")
+  @ApiImplicitParam(name = "token", value = "로그인 시 발급받은 토큰", required = true)
   public CommonResponse logout(String token) {
     if (!tokenService.deleteToken(token)) {
       return CommonResponse.builder()
@@ -69,7 +76,15 @@ public class AuthController {
 
   @PostMapping("join")
   @ApiOperation(value = "회원가입", notes = "회원 가입을 수행합니다.")
-  public CommonResponse join(@Valid UserDto userDto, Errors errors) {
+  @ApiImplicitParams({
+      @ApiImplicitParam(name = "email", value = "이메일", required = true),
+      @ApiImplicitParam(name = "username", value = "이름", required = true),
+      @ApiImplicitParam(name = "nick", value = "닉네임", required = true),
+      @ApiImplicitParam(name = "password", value = "비밀번호", required = true),
+      @ApiImplicitParam(name = "phoneNumber", value = "전화번호", required = true),
+      @ApiImplicitParam(name = "gender", value = "성별 선택")
+  })
+  public CommonResponse join(@Valid CreateUserDto createUserDto, Errors errors) {
     if (errors.hasErrors()) {
       return CommonResponse.builder()
           .code("REGISTERED_ERROR")
@@ -78,8 +93,8 @@ public class AuthController {
           .build();
     }
 
-    if (userService.findByEmail(userDto.getEmail()).isPresent() ||
-        userService.findByUsername(userDto.getUsername()).isPresent()) {
+    if (userService.findByEmail(createUserDto.getEmail()).isPresent() ||
+        userService.findByUsername(createUserDto.getUsername()).isPresent()) {
       return CommonResponse.builder()
           .code("REGISTERED_ERROR")
           .status(400)
@@ -87,7 +102,7 @@ public class AuthController {
           .build();
     }
 
-    authService.join(userDto);
+    authService.join(createUserDto);
 
     return CommonResponse.builder()
         .code("JOIN_SUCCESS")
