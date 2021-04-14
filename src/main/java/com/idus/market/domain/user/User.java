@@ -16,10 +16,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-@Entity(name = "user")
+@Entity
 @Getter
 public class User extends BaseTimeEntity {
-
+  //TODO Entity Join with Orders
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;

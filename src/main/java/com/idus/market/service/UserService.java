@@ -2,12 +2,13 @@ package com.idus.market.service;
 
 import com.idus.market.domain.user.User;
 import com.idus.market.domain.user.UserRepository;
-import com.idus.market.dto.GetUserDto;
+import com.idus.market.dto.GetUsersRequestDto;
+import com.idus.market.dto.GetUsersRequestDto.TARGET;
+import com.idus.market.dto.GetUsersResponseDto;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,15 +19,18 @@ public class UserService {
 
   private final UserRepository userRepository;
 
-
-  public List<User> findAll() {
-    return userRepository.findAll();
-  }
-
-  public Page<User> findAll(GetUserDto getUserDto) {
-    return userRepository.findAll(
-        PageRequest.of(getUserDto.getPage(), getUserDto.getSize(), getUserDto.getOrderby(),
-            getUserDto.getTarget().toString()));
+  public List<User> findAll(Pageable pageable,
+      GetUsersRequestDto getUsersRequestDto) {
+    TARGET target = getUsersRequestDto.getTarget();
+    if (target != null) {
+      if (target == TARGET.email) {
+        return userRepository.findAllByEmailIsContaining(getUsersRequestDto.getData(), pageable);
+      } else {
+        return userRepository.findAllByUsernameIsContaining(getUsersRequestDto.getData(), pageable);
+      }
+    }
+//    return userRepository.findAll(pageable).toList();
+    return null;
   }
 
   public Optional<User> findByUsername(String username) {
