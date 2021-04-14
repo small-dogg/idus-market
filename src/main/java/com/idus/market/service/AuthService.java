@@ -5,7 +5,7 @@ import com.idus.market.config.exception.LoginFailedException;
 import com.idus.market.domain.user.User;
 import com.idus.market.domain.user.UserRepository;
 import com.idus.market.dto.AuthDto;
-import com.idus.market.dto.CreateUserDto;
+import com.idus.market.dto.UserDto.CreateUserDto;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;

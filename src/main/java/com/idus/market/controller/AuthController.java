@@ -6,7 +6,7 @@ import com.idus.market.config.exception.LoginFailedException;
 import com.idus.market.config.jwt.TokenProvider;
 import com.idus.market.config.jwt.TokenService;
 import com.idus.market.dto.AuthDto;
-import com.idus.market.dto.CreateUserDto;
+import com.idus.market.dto.UserDto.CreateUserDto;
 import com.idus.market.service.AuthService;
 import com.idus.market.service.UserService;
 import io.swagger.annotations.ApiImplicitParam;

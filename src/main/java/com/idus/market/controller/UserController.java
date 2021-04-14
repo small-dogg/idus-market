@@ -1,8 +1,7 @@
 package com.idus.market.controller;
 
 import com.idus.market.domain.user.User;
-import com.idus.market.dto.GetUsersRequestDto;
-import com.idus.market.dto.GetUsersResponseDto;
+import com.idus.market.dto.UserDto.GetUsersRequestDto;
 import com.idus.market.service.UserService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -21,7 +20,7 @@ public class UserController {
 
   private final UserService userService;
 
-  @GetMapping()
+  @GetMapping
   @ApiOperation(value = "사용자 리스트 조회", notes = "사용자 목록을 조회합니다")
 //  @ApiImplicitParams({
 //      @ApiImplicitParam(name = "target", value = "정렬 대상"),
@@ -29,13 +28,7 @@ public class UserController {
 //      @ApiImplicitParam(name = "page", value = "특정 페이지 (첫페이지 : 0)"),
 //      @ApiImplicitParam(name = "size", value = "한 페이지당 출력할 목록 수")
 //  })
-  public List<User> getUsers(Pageable pageable,
-      GetUsersRequestDto getUsersRequestDto) {
-    /** TODO 여러 회원 목록 조회
-     *  - 페이지네이션으로 일정 단위로 조회합니다.
-     *  - 이름, 이메일을 이용하여 검색 기능이 필요합니다.
-     *  - 각 회원의 마지막 주문 정보
-     **/
+  public List<User> getUsers(Pageable pageable, GetUsersRequestDto getUsersRequestDto) {
     return userService.findAll(pageable, getUsersRequestDto);
   }
 
