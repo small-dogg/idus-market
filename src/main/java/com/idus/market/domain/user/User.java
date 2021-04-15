@@ -49,10 +49,6 @@ public class User extends BaseTimeEntity {
   @Column(length = 8)
   private GenderType gender;
 
-  @OneToMany(mappedBy = "user")
-  @JsonManagedReference
-  private List<Orders> orders = new ArrayList<>();
-
   public User(CreateUserDto createUserDto) {
     this.username = createUserDto.getUsername();
     this.nick = createUserDto.getNick();

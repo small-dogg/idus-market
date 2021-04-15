@@ -1,11 +1,13 @@
 package com.idus.market.dto;
 
 import com.idus.market.domain.order.Orders;
+import com.idus.market.domain.order.QOrders;
 import com.idus.market.domain.user.GenderType;
+import com.idus.market.domain.user.QUser;
 import com.idus.market.domain.user.User;
+import com.querydsl.core.annotations.QueryProjection;
 import com.sun.istack.NotNull;
 import io.swagger.annotations.ApiModelProperty;
-import java.util.List;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -18,15 +20,19 @@ public class UserDto {
 
   @Getter
   @Builder
-  @AllArgsConstructor
-  public static class GetUsersResponseDto extends User {
-    private String name;
+  public static class GetUsersResponseDto {
+    private String username;
     private String nick;
-    private String password;
-    private String phoneNumber;
-    private String email;
-    private GenderType gender;
-    private List<Orders> orders;
+//    private String phoneNumber;
+//    private String email;
+    private String orders;
+
+    @QueryProjection
+    public GetUsersResponseDto(String username, String nick, String productName) {
+      this.username = username;
+      this.nick = nick;
+      this.orders = productName;
+    }
   }
 
   @Getter

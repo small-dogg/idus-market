@@ -1,7 +1,7 @@
 package com.idus.market.config.auth;
 
 import com.idus.market.domain.user.User;
-import com.idus.market.domain.user.UserRepository;
+import com.idus.market.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

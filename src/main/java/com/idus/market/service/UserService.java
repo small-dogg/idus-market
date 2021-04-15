@@ -1,7 +1,8 @@
 package com.idus.market.service;
 
 import com.idus.market.domain.user.User;
-import com.idus.market.domain.user.UserRepository;
+import com.idus.market.repository.QUserRepository;
+import com.idus.market.repository.UserRepository;
 import com.idus.market.dto.UserDto.GetUsersRequestDto;
 import com.idus.market.dto.UserDto.GetUsersRequestDto.TARGET;
 import com.idus.market.dto.UserDto.GetUsersResponseDto;
@@ -19,18 +20,20 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
   private final UserRepository userRepository;
+  private final QUserRepository qUserRepository;
 
-  public List<User> findAll(Pageable pageable, GetUsersRequestDto getUsersRequestDto) {
+  public List<GetUsersResponseDto> findAll(Pageable pageable, GetUsersRequestDto getUsersRequestDto) {
     List<GetUsersResponseDto> usersResponseDtoList = new ArrayList<>();
     TARGET target = getUsersRequestDto.getTarget();
     if (target != null) {
       if (target == TARGET.email) {
-        return userRepository.findAllByEmailIsContainingWithLastOrder(getUsersRequestDto.getData(), pageable);
+//        qUserRepository.findAllByUsernameIsContainingWithLastOrder();
       } else {
-        return userRepository.findAllByUsernameIsContainingWithLastOrder(getUsersRequestDto.getData(), pageable);
+        qUserRepository.findAllByUsernameIsContainingWithLastOrder(getUsersRequestDto.getData());
       }
     }
-    return userRepository.findAll(pageable).toList();
+    return null;
+//    return userRepository.findAll(pageable).toList();
   }
 
   public Optional<User> findByUsername(String username) {

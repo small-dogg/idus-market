@@ -27,8 +27,5 @@ public class Orders extends BaseTimeEntity {
 
   private String name;
 
-  @ManyToOne
-  @JoinColumn(name = "USER_ID")
-  @JsonBackReference
-  private User user;
+  private Long userId;
 }
