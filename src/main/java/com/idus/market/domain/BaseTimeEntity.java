@@ -16,7 +16,7 @@ public class BaseTimeEntity {
 
   @ApiModelProperty(hidden = true)
   @CreatedDate
-  public LocalDateTime createAt;
+  public LocalDateTime createdAt;
 
   @ApiModelProperty(hidden = true)
   @LastModifiedDate

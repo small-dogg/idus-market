@@ -25,12 +25,12 @@ public class UserService {
     TARGET target = getUsersRequestDto.getTarget();
     if (target != null) {
       if (target == TARGET.email) {
-        userRepository.findAllByEmailIsContaining(getUsersRequestDto.getData(), pageable);
+        return userRepository.findAllByEmailIsContainingWithLastOrder(getUsersRequestDto.getData(), pageable);
       } else {
-        userRepository.findAllByUsernameIsContaining(getUsersRequestDto.getData(), pageable);
+        return userRepository.findAllByUsernameIsContainingWithLastOrder(getUsersRequestDto.getData(), pageable);
       }
     }
-    return null;
+    return userRepository.findAll(pageable).toList();
   }
 
   public Optional<User> findByUsername(String username) {

@@ -1,3 +1,11 @@
+buildscript {
+    ext {
+        lombokVersion = "1.18.16"
+        swaggerVersion = "2.9.2"
+        queryDslVersion = "4.4.0"
+    }
+}
+
 plugins {
     id 'org.springframework.boot' version '2.4.4'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
@@ -43,10 +51,13 @@ dependencies {
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.16'
 
     //swagger
-    implementation 'io.springfox:springfox-swagger-ui:2.9.2'
-    implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+    implementation('io.springfox:springfox-swagger-ui:2.9.2')
+    implementation('io.springfox:springfox-swagger2:2.9.2')
 
-
+    implementation("com.querydsl:querydsl-jpa:${queryDslVersion}")
+    annotationProcessor("com.querydsl:querydsl-apt:${queryDslVersion}:jpa")
+    testImplementation("com.querydsl:querydsl-jpa:${queryDslVersion}")
+    testAnnotationProcessor("com.querydsl:querydsl-apt:${queryDslVersion}:jpa")
 }
 
 test {

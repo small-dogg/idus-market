@@ -14,7 +14,6 @@ import org.springframework.validation.Errors;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.schema.AlternateTypeRule;
 import springfox.documentation.schema.AlternateTypeRules;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.ApiKey;
@@ -28,7 +27,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
-
+  //Todo NumberFormatException in Swagger API-DOCS
 
   @Bean
   public Docket docket() {
@@ -44,7 +43,8 @@ public class SwaggerConfig {
         .ignoredParameterTypes(Errors.class)
         .securityContexts(Arrays.asList(securityContext()))
         .securitySchemes(Arrays.asList(apiKey()))
-    .alternateTypeRules(AlternateTypeRules.newRule(typeResolver.resolve(Pageable.class),typeResolver.resolve(Page.class)));
+        .alternateTypeRules(AlternateTypeRules
+            .newRule(typeResolver.resolve(Pageable.class), typeResolver.resolve(Page.class)));
 
     return docket.select()
         .apis(RequestHandlerSelectors.basePackage("com.idus.market.controller"))
@@ -71,10 +71,11 @@ public class SwaggerConfig {
   @Setter
   @ApiModel
   static class Page {
+
     @ApiModelProperty(value = "페이지 번호 (첫페이지 : 0)")
     private int page;
 
-    @ApiModelProperty(value = "한 페이지 당 출력 수", allowableValues="range[0, 100]")
+    @ApiModelProperty(value = "한 페이지 당 출력 수", allowableValues = "range[0, 100]")
     private int size;
   }
 }
