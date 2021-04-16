@@ -30,7 +30,7 @@ public class AuthController {
   private final TokenService tokenService;
 
   @PostMapping("login")
-  @ApiOperation(value = "로그인", notes = "회원 로그인을 수행합니다.")
+  @ApiOperation(value = "회원 로그인", notes = "회원 로그인을 수행합니다. (토큰 유효 시간 : 15분)")
   @ApiImplicitParams({
       @ApiImplicitParam(name = "email", value = "이메일", required = true),
       @ApiImplicitParam(name = "password", value = "비밀번호", required = true)
@@ -57,7 +57,7 @@ public class AuthController {
   }
 
   @PostMapping("logout")
-  @ApiOperation(value = "로그아웃", notes = "회원 로그아웃을 수행합니다.")
+  @ApiOperation(value = "회원 로그아웃", notes = "회원 로그아웃을 수행합니다.")
   @ApiImplicitParam(name = "token", value = "로그인 시 발급받은 토큰", required = true)
   public CommonResponse logout(String token) {
     if (!tokenService.deleteToken(token)) {
@@ -98,7 +98,7 @@ public class AuthController {
       return CommonResponse.builder()
           .code("REGISTERED_ERROR")
           .status(400)
-          .message("이미 존재하는 계정이거나, 이메일 주소가 중복되었습니다.")
+          .message("이미 등록된 이메일 주소입니다.")
           .build();
     }
 
