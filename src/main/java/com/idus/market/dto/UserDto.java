@@ -1,9 +1,7 @@
 package com.idus.market.dto;
 
 import com.idus.market.domain.order.Orders;
-import com.idus.market.domain.order.QOrders;
 import com.idus.market.domain.user.GenderType;
-import com.idus.market.domain.user.QUser;
 import com.idus.market.domain.user.User;
 import com.querydsl.core.annotations.QueryProjection;
 import com.sun.istack.NotNull;
@@ -19,19 +17,21 @@ import lombok.Getter;
 public class UserDto {
 
   @Getter
-  @Builder
   public static class GetUsersResponseDto {
+
     private String username;
     private String nick;
-//    private String phoneNumber;
-//    private String email;
-    private String orders;
+    private String phoneNumber;
+    private String email;
+    private Orders orders;
 
     @QueryProjection
-    public GetUsersResponseDto(String username, String nick, String productName) {
-      this.username = username;
-      this.nick = nick;
-      this.orders = productName;
+    public GetUsersResponseDto(User user, Orders orders) {
+      this.username = user.getUsername();
+      this.nick = user.getNick();
+      this.phoneNumber = user.getPhoneNumber();
+      this.email = user.getEmail();
+      this.orders = orders;
     }
   }
 
@@ -40,11 +40,8 @@ public class UserDto {
   @AllArgsConstructor
   public static class GetUsersRequestDto {
 
-    private String data;
-    private TARGET target;
-    public enum TARGET {
-      username, email
-    }
+    private String username;
+    private String email;
   }
 
   @Getter

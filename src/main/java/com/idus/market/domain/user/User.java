@@ -1,8 +1,6 @@
 package com.idus.market.domain.user;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.idus.market.domain.BaseTimeEntity;
-import com.idus.market.domain.order.Orders;
 import com.idus.market.dto.UserDto.CreateUserDto;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,7 +12,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

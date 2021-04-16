@@ -29,7 +29,8 @@ public class UserController {
 //      @ApiImplicitParam(name = "page", value = "특정 페이지 (첫페이지 : 0)"),
 //      @ApiImplicitParam(name = "size", value = "한 페이지당 출력할 목록 수")
 //  })
-  public List<GetUsersResponseDto> getUsers(Pageable pageable, GetUsersRequestDto getUsersRequestDto) {
+  public List<GetUsersResponseDto> getUsers(Pageable pageable,
+      GetUsersRequestDto getUsersRequestDto) {
     return userService.findAll(pageable, getUsersRequestDto);
   }
 
