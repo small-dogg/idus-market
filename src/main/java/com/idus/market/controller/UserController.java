@@ -25,7 +25,7 @@ public class UserController {
   @GetMapping
   @ApiOperation(value = "여러 회원 목록 조회", notes = "여러 회원 목록을 조회합니다")
   @ApiImplicitParams({
-      @ApiImplicitParam(name = "username", value = "이름"),
+      @ApiImplicitParam(name = "name", value = "이름"),
       @ApiImplicitParam(name = "email", value = "이메일")
   })
   public List<GetUsersResponseDto> getUsers(Pageable pageable,
@@ -33,7 +33,7 @@ public class UserController {
     return userService.findAll(pageable, getUsersRequestDto);
   }
 
-  @GetMapping("/{username}")
+  @GetMapping("/{email}")
   @ApiOperation(value = "단일 회원 상세 정보 조회", notes = "특정 사용자를 조회합니다")
   @ApiImplicitParam(name = "email", value = "이메일")
   public User getUser(@PathVariable String email) {

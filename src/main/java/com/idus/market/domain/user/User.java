@@ -25,7 +25,7 @@ public class User extends BaseTimeEntity {
   private Long id;
 
   @Column(length = 20, nullable = false)
-  private String username;
+  private String name;
 
   @Column(length = 30, nullable = false)
   private String nick;
@@ -47,7 +47,7 @@ public class User extends BaseTimeEntity {
   private GenderType gender;
 
   public User(CreateUserDto createUserDto) {
-    this.username = createUserDto.getUsername();
+    this.name = createUserDto.getName();
     this.nick = createUserDto.getNick();
     this.password = createUserDto.getPassword();
     this.phoneNumber = createUserDto.getPhoneNumber();

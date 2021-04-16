@@ -29,8 +29,8 @@ public class UserService {
 //    return userRepository.findAll(pageable).toList();
   }
 
-  public Optional<User> findByUsername(String username) {
-    return userRepository.findByUsername(username);
+  public Optional<User> findByName(String name) {
+    return userRepository.findByName(name);
   }
 
   public Optional<User> findByEmail(String email) {

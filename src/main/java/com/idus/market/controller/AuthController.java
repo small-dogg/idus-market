@@ -77,11 +77,11 @@ public class AuthController {
   @PostMapping("join")
   @ApiOperation(value = "회원가입", notes = "회원 가입을 수행합니다.")
   @ApiImplicitParams({
-      @ApiImplicitParam(name = "email", value = "이메일", required = true),
-      @ApiImplicitParam(name = "username", value = "이름", required = true),
-      @ApiImplicitParam(name = "nick", value = "닉네임", required = true),
-      @ApiImplicitParam(name = "password", value = "비밀번호", required = true),
-      @ApiImplicitParam(name = "phoneNumber", value = "전화번호", required = true),
+      @ApiImplicitParam(name = "name", value = "이름 (최대길이 20자, 영문 대소문자, 한글만 허용)", required = true),
+      @ApiImplicitParam(name = "email", value = "이메일 (최대길이 100자, 이메일 형식만 허용)", required = true),
+      @ApiImplicitParam(name = "nick", value = "닉네임 (최대길이 30자, 영문 소문자만 허용)", required = true),
+      @ApiImplicitParam(name = "password", value = "비밀번호 (최소길이 10자, 영문 대문자, 영문 소문자, 특수 문자, 숫자 각 1개 이상 포함해야 함)", required = true),
+      @ApiImplicitParam(name = "phoneNumber", value = "전화번호 (최대길이 20자, 전화번호 형식만 허용)", required = true),
       @ApiImplicitParam(name = "gender", value = "성별 선택")
   })
   public CommonResponse join(@Valid CreateUserDto createUserDto, Errors errors) {
@@ -93,8 +93,7 @@ public class AuthController {
           .build();
     }
 
-    if (userService.findByEmail(createUserDto.getEmail()).isPresent() ||
-        userService.findByUsername(createUserDto.getUsername()).isPresent()) {
+    if (userService.findByEmail(createUserDto.getEmail()).isPresent()){
       return CommonResponse.builder()
           .code("REGISTERED_ERROR")
           .status(400)

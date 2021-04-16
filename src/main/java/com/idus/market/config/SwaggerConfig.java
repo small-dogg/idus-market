@@ -72,10 +72,10 @@ public class SwaggerConfig {
   @ApiModel
   static class Page {
 
-    @ApiModelProperty(value = "페이지 번호 (첫페이지 : 0)")
+    @ApiModelProperty(value = "페이지 번호 (첫페이지 : 0, 기본값 : 0)")
     private int page;
 
-    @ApiModelProperty(value = "한 페이지 당 출력 수", allowableValues = "range[0, 100]")
+    @ApiModelProperty(value = "한 페이지 당 출력 수 (기본값 : 20)")
     private int size;
   }
 }

@@ -23,7 +23,7 @@ public class QUserRepository {
   public List<GetUsersResponseDto> findAllByUsernameIsContainingWithLastOrder(Pageable pageable,
       GetUsersRequestDto getUsersRequestDto) {
 
-    QUser qUser = new QUser("u");
+    QUser qUser = QUser.user;
     QOrders qOrders = new QOrders("o1");
 
     QOrders qOrdersComparer = new QOrders("o2");
@@ -36,18 +36,13 @@ public class QUserRepository {
             .and(qOrdersComparer.createdAt.after(qOrders.createdAt)))
         .where(qOrdersComparer.createdAt.isNull())
         .where(
-            isEmpty(getUsersRequestDto.getUsername()) ? null
-                : qUser.username.eq(getUsersRequestDto.getUsername()),
+            isEmpty(getUsersRequestDto.getName()) ? null
+                : qUser.name.eq(getUsersRequestDto.getName()),
             isEmpty(getUsersRequestDto.getEmail()) ? null
                 : qUser.email.eq(getUsersRequestDto.getEmail())
         ).offset(pageable.getOffset())
         .limit(pageable.getPageSize())
         .fetch();
-
-    //pageable default 0page, 20size
-//    List<GetUsersResponseDto> getUsersResponseDtoList = new ArrayList<>();
-//        .where(qUser.username.eq(username))
-//        .fetch();
 
     return getUsersResponseDtoList;
   }
