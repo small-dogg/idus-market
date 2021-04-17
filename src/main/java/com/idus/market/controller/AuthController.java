@@ -41,7 +41,6 @@ public class AuthController {
       principalDetails = authService.login(authDto);
     } catch (LoginFailedException loginFailedException) {
       return CommonResponse.builder()
-          .code("LOGIN_ERROR")
           .status(401)
           .message(loginFailedException.getMessage())
           .build();
@@ -50,7 +49,6 @@ public class AuthController {
     String token = tokenProvider.createToken(principalDetails);
 
     return CommonResponse.builder()
-        .code("LOGIN_SUCCESS")
         .status(200)
         .message(token)
         .build();
@@ -62,15 +60,13 @@ public class AuthController {
   public CommonResponse logout(String token) {
     if (!tokenService.deleteToken(token)) {
       return CommonResponse.builder()
-          .code("TOKEN_EXPIRED_ERROR")
           .status(400)
-          .message("유효하지 않은 토큰입니다")
+          .message("Invalid token")
           .build();
     }
     return CommonResponse.builder()
-        .code("TOKEN_EXPIRED_SUCCESS")
         .status(200)
-        .message("로그아웃을 성공하였습니다")
+        .message("Success to sign out")
         .build();
   }
 
@@ -87,25 +83,23 @@ public class AuthController {
   public CommonResponse join(@Valid CreateUserDto createUserDto, Errors errors) {
     if (errors.hasErrors()) {
       return CommonResponse.builder()
-          .code("REGISTERED_ERROR")
           .status(400)
           .message(errors.getAllErrors().get(0).getDefaultMessage())
           .build();
     }
 
-    if (userService.findByEmail(createUserDto.getEmail()).isPresent()){
+    if (userService.findByEmail(createUserDto.getEmail()).isPresent()) {
       return CommonResponse.builder()
-          .code("REGISTERED_ERROR")
           .status(400)
-          .message("이미 등록된 이메일 주소입니다.")
+          .message("Email already exist")
           .build();
     }
 
     authService.join(createUserDto);
 
     return CommonResponse.builder()
-        .code("JOIN_SUCCESS")
         .status(200)
+        .message("Success to join")
         .build();
   }
 }
