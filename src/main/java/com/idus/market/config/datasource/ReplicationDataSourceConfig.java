@@ -1,8 +1,10 @@
 package com.idus.market.config.datasource;
 
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.zaxxer.hikari.HikariDataSource;
 import java.util.HashMap;
 import java.util.Map;
+import javax.persistence.EntityManager;
 import javax.sql.DataSource;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -39,7 +41,7 @@ public class ReplicationDataSourceConfig {
     return routingDataSource;
   }
 
-  public DataSource getDataSource(DataSourceProperty dataSourceProperty){
+  public DataSource getDataSource(DataSourceProperty dataSourceProperty) {
     return DataSourceBuilder.create()
         .type(HikariDataSource.class)
         .url(dataSourceProperty.getUrl())
@@ -58,5 +60,10 @@ public class ReplicationDataSourceConfig {
   @ConfigurationProperties(prefix = "datasource.read")
   public DataSourceProperty readDataSourceProperty() {
     return new DataSourceProperty();
+  }
+
+  @Bean
+  public JPAQueryFactory jpaQueryFactory(EntityManager em) {
+    return new JPAQueryFactory(em);
   }
 }
