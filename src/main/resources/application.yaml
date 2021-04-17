@@ -13,18 +13,18 @@ logging:
 
 datasource:
   write:
-    url: jdbc:mysql://localhost:3306/idus_market_write?ServerTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3306/idus_market_write?ServerTimezone=Asia/Seoul&useUnicode=true
     username: sypark
     password: qwe1212!Q
   read:
-    url: jdbc:mysql://localhost:3306/idus_market_read?ServerTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3306/idus_market_read?ServerTimezone=Asia/Seoul&useUnicode=true
     username: sypark
     password: qwe1212!Q
 
 spring:
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true
