@@ -13,8 +13,9 @@ plugins {
 }
 
 group = 'com.idus'
-version = '0.0.1-SNAPSHOT'
+version = '1.0.0'
 sourceCompatibility = '11'
+targetCompatibility = '11'
 
 configurations {
     compileOnly {
@@ -40,6 +41,7 @@ dependencies {
 
     runtimeOnly 'mysql:mysql-connector-java'
 
+
     //jwt
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
@@ -60,11 +62,14 @@ dependencies {
         exclude module: 'swagger-models'
     }
 
+
+    //queryDSL
     implementation("com.querydsl:querydsl-jpa:${queryDslVersion}")
     annotationProcessor("com.querydsl:querydsl-apt:${queryDslVersion}:jpa")
     testImplementation("com.querydsl:querydsl-jpa:${queryDslVersion}")
     testAnnotationProcessor("com.querydsl:querydsl-apt:${queryDslVersion}:jpa")
 }
+
 configure("querydsl-sample") {
     apply plugin: "io.spring.dependency-management"
 

@@ -8,6 +8,7 @@ import java.util.HashMap;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -51,7 +52,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             UsernamePasswordAuthenticationFilter.class)
         .authorizeRequests()
         .antMatchers("/api/**/auth/**").permitAll()
-        .antMatchers("/api/**").hasAnyRole("ADMIN", "USER")
+        .antMatchers(HttpMethod.GET,"/api/**/orders").hasRole("ADMIN")
+        .antMatchers(HttpMethod.POST,"/api/**/orders").hasAnyRole("ADMIN", "USER")
         .antMatchers("/api/**/user").hasRole("ADMIN")
         .antMatchers("/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**",
             "/swagger/**").permitAll()

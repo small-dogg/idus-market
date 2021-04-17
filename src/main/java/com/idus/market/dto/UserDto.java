@@ -3,15 +3,18 @@ package com.idus.market.dto;
 import com.idus.market.domain.order.Orders;
 import com.idus.market.domain.user.GenderType;
 import com.idus.market.domain.user.User;
+import com.idus.market.dto.OrdersDto.getOrdersResponseDto;
 import com.querydsl.core.annotations.QueryProjection;
 import com.sun.istack.NotNull;
 import io.swagger.annotations.ApiModelProperty;
+import java.time.LocalDateTime;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 public class UserDto {
 
@@ -22,7 +25,9 @@ public class UserDto {
     private String nick;
     private String phoneNumber;
     private String email;
-    private Orders orders;
+    private LocalDateTime createdAt;
+    private LocalDateTime modifiedAt;
+    private getOrdersResponseDto orders = null;
 
     @QueryProjection
     public GetUsersResponseDto(User user, Orders orders) {
@@ -30,17 +35,21 @@ public class UserDto {
       this.nick = user.getNick();
       this.phoneNumber = user.getPhoneNumber();
       this.email = user.getEmail();
-      this.orders = orders;
+      this.createdAt = user.getCreatedAt();
+      this.modifiedAt = user.getModifiedAt();
+      if(orders!=null) {
+        this.orders = new getOrdersResponseDto(orders);
+      }
+      System.out.println(this.orders);
     }
   }
 
   @Getter
-  @Builder
-  @AllArgsConstructor
+  @RequiredArgsConstructor
   public static class GetUsersRequestDto {
 
-    private String name;
-    private String email;
+    private final String name;
+    private final String email;
   }
 
   @Getter
@@ -63,7 +72,7 @@ public class UserDto {
     @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&+=]).*$", message = "패스워드는 영문 대문자, 영문 소문자, 특수 문자, 숫자 각 1개 이상씩 포함해야 합니다")
     private String password;
 
-    @NotBlank
+    @NotBlank(message = "이메일은 공백일 수 없습니다")
     @Size(max = 100, message = "이메일의 길이는 최대 100자입니다")
     @Pattern(regexp = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$", message = "올바른 형식의 이메일 주소여야 합니다")
     private String email;
@@ -73,7 +82,7 @@ public class UserDto {
     @Pattern(regexp = "^\\d{3}-\\d{3,4}-\\d{4}$", message = "휴대폰 번호는 010-1234-5678 형태로 표기하세요")
     private String phoneNumber;
 
-    @NotNull
+    @NotBlank(message = "성별을 선택하십시오")
     private GenderType gender;
 
     @ApiModelProperty(hidden = true)

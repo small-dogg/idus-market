@@ -1,6 +1,7 @@
 package com.idus.market.domain.order;
 
 import com.idus.market.domain.BaseTimeEntity;
+import com.idus.market.dto.OrdersDto.createOrdersDto;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Entity(name = "orders")
 @Getter
 @Builder
 public class Orders extends BaseTimeEntity {
@@ -21,7 +22,15 @@ public class Orders extends BaseTimeEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  private String orderId;
+
   private String name;
 
   private Long userId;
+
+  public Orders(createOrdersDto createOrdersDto) {
+    this.orderId = createOrdersDto.getOrderId();
+    this.name = createOrdersDto.getName();
+    this.userId = createOrdersDto.getUserId();
+  }
 }
