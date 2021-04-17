@@ -1,4 +1,4 @@
-package com.idus.market.config.security;
+package com.idus.market.config.jwt;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
