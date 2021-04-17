@@ -18,7 +18,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Orders extends BaseTimeEntity {
 
-  //TODO response Dto!!
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
