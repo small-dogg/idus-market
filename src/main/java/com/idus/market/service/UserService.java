@@ -5,7 +5,6 @@ import com.idus.market.dto.UserDto.GetUsersRequestDto;
 import com.idus.market.dto.UserDto.GetUsersResponseDto;
 import com.idus.market.repository.QUserRepository;
 import com.idus.market.repository.UserRepository;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -23,14 +22,7 @@ public class UserService {
 
   public List<GetUsersResponseDto> findAll(Pageable pageable,
       GetUsersRequestDto getUsersRequestDto) {
-    List<GetUsersResponseDto> usersResponseDtoList = new ArrayList<>();
-    return qUserRepository
-        .findAllByUsernameIsContainingWithLastOrder(pageable, getUsersRequestDto);
-//    return userRepository.findAll(pageable).toList();
-  }
-
-  public Optional<User> findByName(String name) {
-    return userRepository.findByName(name);
+    return qUserRepository.findAllByUsernameIsContainingWithLastOrder(pageable, getUsersRequestDto);
   }
 
   public Optional<User> findByEmail(String email) {

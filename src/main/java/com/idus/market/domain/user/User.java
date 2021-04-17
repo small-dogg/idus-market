@@ -16,7 +16,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-@Entity
+@Entity(name = "user")
 @Getter
 public class User extends BaseTimeEntity {
 
@@ -40,7 +40,7 @@ public class User extends BaseTimeEntity {
   private String email;
 
   @Column(nullable = false)
-  private String role;
+  private String roles;
 
   @Enumerated(value = EnumType.STRING)
   @Column(length = 8)
@@ -52,13 +52,13 @@ public class User extends BaseTimeEntity {
     this.password = createUserDto.getPassword();
     this.phoneNumber = createUserDto.getPhoneNumber();
     this.email = createUserDto.getEmail();
-    this.role = createUserDto.getRoles();
+    this.roles = createUserDto.getRoles();
     this.gender = createUserDto.getGender();
   }
 
   public List<String> getRoleList() {
-    if (this.role.length() > 0) {
-      return Arrays.asList(this.role.split(","));
+    if (this.roles.length() > 0) {
+      return Arrays.asList(this.roles.split(","));
     }
     return new ArrayList<>();
   }
