@@ -4,11 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum ErrorCode {
-  AUTHENTICATION_FAILED(401, "AUTHENTICATION_001", "Authentication failed"),
-  LOGIN_FAILED(401, "AUTHENTICATION_002", "Invalid email or password"),
-  ACCESS_DENIED(401, "AUTHENTICATION_003", "Access Denied"),
-  TOKEN_GENERATION_FAILED(500, "AUTHENTICATION_004", "TOKEN_GENERATION_FAILED");
-
+  LOGIN_FAILED(401, "AUTHENTICATION_001", "Invalid email or password");
 
   private final String code;
   private final String message;
