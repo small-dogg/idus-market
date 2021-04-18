@@ -32,11 +32,12 @@ public class OrdersDto {
 
   @Getter
   public static class getOrdersResponseDto extends BaseTimeEntity {
+
     private String name;
     private String orderId;
 
     @QueryProjection
-    public getOrdersResponseDto(Orders orders){
+    public getOrdersResponseDto(Orders orders) {
       this.name = orders.getName();
       this.orderId = orders.getOrderId();
       this.createdAt = orders.getCreatedAt();

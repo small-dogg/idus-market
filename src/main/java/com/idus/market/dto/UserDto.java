@@ -5,7 +5,6 @@ import com.idus.market.domain.user.GenderType;
 import com.idus.market.domain.user.User;
 import com.idus.market.dto.OrdersDto.getOrdersResponseDto;
 import com.querydsl.core.annotations.QueryProjection;
-import com.sun.istack.NotNull;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDateTime;
 import javax.validation.constraints.NotBlank;
@@ -37,7 +36,7 @@ public class UserDto {
       this.email = user.getEmail();
       this.createdAt = user.getCreatedAt();
       this.modifiedAt = user.getModifiedAt();
-      if(orders!=null) {
+      if (orders != null) {
         this.orders = new getOrdersResponseDto(orders);
       }
       System.out.println(this.orders);

@@ -4,7 +4,8 @@ import lombok.Getter;
 
 @Getter
 public enum ErrorCode {
-  LOGIN_FAILED(401, "AUTHENTICATION_001", "Invalid email or password");
+  LOGIN_FAILED(401, "AUTHENTICATION_001", "Invalid email or password"),
+  INVALID_PARAM_DATA(400, "PARAMETER_001", "Invalid parameter data");
 
   private final String code;
   private final String message;

@@ -39,12 +39,10 @@ mysql 사용자 인증정보
 |syaprk   |qwe1212!Q |
 
 위 사용자는 MySQL 초기화 sql에 의해, idus_market_% 의 접근권한을 가지고있습니다.
+
 ```
 참고) ./mysql-init-files/idus_market-database.sql
 ```
-
-
-
 
 #### 3.2. 데이터베이스 샘플데이터
 
@@ -75,7 +73,6 @@ mysql 사용자 인증정보
 | 19 | 테스트Ss | tests | qwe1212!QQ                                                                | 010-0000-0000 | test@aa.a13 | Male   | ROLE_USER            | sql 작성 날짜 기준 | sql 작성 날짜 기준 |
 | 20 | 테스트Tt | testt | qwe1212!QQ                                                                | 010-0000-0000 | test@aa.a13 | Female | ROLE_USER            | sql 작성 날짜 기준 | sql 작성 날짜 기준 |
 
-
 <표2> 주문 정보 샘플데이터
 
 | id | orderId       | name                                                                           | createdAt                  | modifiedAt                 | userId |
@@ -102,42 +99,48 @@ mysql 사용자 인증정보
 이 프로젝트를 빌드하기 위해, gradle 커맨드를 사용하고 java 커맨드를 통해, 빌드 결과물 jar 파일을 실행합니다.
 
 #### 4.1. Gradle Build & java -jar
+
 Gradle 커맨드를 사용하여, 프로젝트 빌드를 수행합니다.
+
 ```bash
 $ gradle build
 ```
 
 Java 커맨드를 사용하여, 빌드 결과물 jar 파일을 실행합니다.
+
 ```bash
 $ java -jar ./build/libs/market-1.0.0.jar
 ```
 
 ### 5. Swagger 사용법
+
 Swagger 페이지 : http://localhost:8080/swagger-ui.html
 
 #### 5.1 회원가입
+
 유효 값에 따라 항목을 입력 후, 회원가입을 진행합니다.
 
 #### 5.2 로그인
-회원가입 시 작성한 이매일과 비밀번호를 입력하여 얻어진 message 키 값(X-Auth-Token)을 획득합니다.
-획득한 값을 좌측 상단 Authorize 버튼을 클릭하여 입력합니다.
-X-Auth-Token은 (bearer 공백 키값) 구성으로 작성합니다.
+
+회원가입 시 작성한 이매일과 비밀번호를 입력하여 얻어진 message 키 값(X-Auth-Token)을 획득합니다. 획득한 값을 우측 상단 Authorize 버튼을 클릭하여
+입력합니다. X-Auth-Token은 (bearer 공백 키값) 구성으로 작성합니다.
 
 ```
 입력 예시)bearer eyJ0eXBlIjoiSldUIiwiYWxnIjoiSFM1MTIifQ.eyJpc3MiOiJ0ZXN0QGFhLmE5IiwiZXhwIjoxNjE4NjQ4MTE0LCJpYXQiOjE2MTg2NDY5MTQsImVtYWlsIjoidGVzdEBhYS5hOSJ9.Hr8zeUPauJFIuRvRLkQxjMS5owVQxJ_OHPRiOYhmcRve6ShZyNDKaIOxZrnSrlfu5GeruI2_qEjwANhLGxNaWQ
 ```
 
 #### 5.3 토큰
-발급받은 토큰은 발급 시간 기준 15분동안 유효합니다.
-토큰이 만료될 경우, 권한이 존재하는 API 호출시 HTTP STATUS 403 코드와 에러가 발생합니다.
+
+발급받은 토큰은 발급 시간 기준 15분동안 유효합니다. 토큰이 만료될 경우, 접근 권한이 없는 API 호출시 HTTP STATUS 403 코드와 함께 에러가 발생합니다.
 
 #### 5.4 API 리스트
+
 |API                |HTTP 메서드 | 권한                   |설명                            |
 |-------------------|-----------|-----------------------|--------------------------------|
 |/api/v1/auth/join  |POST      |Anonymous               |회원가입을 수행합니다              |
 |/api/v1/auth/login |POST      |Anonymous               |로그인을 수행합니다                |
 |/api/v1/auth/logout|POST      |Anonymous               |로그아웃을 수행합니다              |
 |/api/v1/orders     |GET       |Admin                   |사용자의 주문정보를 조회합니다      |
-|/api/v1/orders     |POST      |Authenticated Principle |로그인된 사용자의 주문을 등록합니다 |
+|/api/v1/orders     |POST      |Admin, User             |로그인된 사용자의 주문을 등록합니다 |
 |/api/v1/user       |GET       |Admin                   |사용자 목록을 조회합니다           |
 |/api/v1/email      |GET       |Admin                   |사용자를 조회합니다               |
