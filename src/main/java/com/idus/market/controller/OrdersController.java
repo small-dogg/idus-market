@@ -1,6 +1,7 @@
 package com.idus.market.controller;
 
 import com.idus.market.config.CommonResponse;
+import com.idus.market.config.exception.InvalidParamDataException;
 import com.idus.market.domain.order.Orders;
 import com.idus.market.dto.OrdersDto.createOrdersDto;
 import com.idus.market.service.OrdersService;
@@ -8,7 +9,6 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,8 +33,14 @@ public class OrdersController {
   @PostMapping
   private CommonResponse createOrders(createOrdersDto createOrdersDto) {
 
-    ordersService.save(createOrdersDto);
-
+    try {
+      ordersService.save(createOrdersDto);
+    } catch (InvalidParamDataException e) {
+      return CommonResponse.builder()
+          .status(400)
+          .message(e.getMessage())
+          .build();
+    }
     return CommonResponse.builder()
         .message("Success to order")
         .status(200)

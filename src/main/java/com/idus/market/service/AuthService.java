@@ -29,8 +29,9 @@ public class AuthService {
     }
     createUserDto.setPassword(passwordEncoder.encode(createUserDto.getPassword()));
 
-    log.debug("Password is encrypted {} : {}",createUserDto.getEmail(),createUserDto.getPassword());
-    log.info("A new user has been registered : {}",createUserDto.getEmail());
+    log.debug("Password is encrypted {} : {}", createUserDto.getEmail(),
+        createUserDto.getPassword());
+    log.info("A new user has been registered : {}", createUserDto.getEmail());
     return userRepository.save(new User(createUserDto));
   }
 
@@ -39,15 +40,15 @@ public class AuthService {
     Optional<User> user = userRepository.findByEmail(authDto.getEmail());
 
     if (!user.isPresent()) {
-      log.debug("User login failed : {}",authDto.getEmail());
+      log.debug("User login failed : {}", authDto.getEmail());
       log.error("Invalid username and password");
       throw new LoginFailedException();
     }
     if (!passwordEncoder.matches(authDto.getPassword(), user.get().getPassword())) {
       throw new LoginFailedException();
     }
-    log.debug("authDto.getPassword : {}",authDto.getPassword());
-    log.debug("user.get().getPassword : {}",user.get().getPassword());
+    log.debug("authDto.getPassword : {}", authDto.getPassword());
+    log.debug("user.get().getPassword : {}", user.get().getPassword());
 
     return new PrincipalDetails(user.get());
   }

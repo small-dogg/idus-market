@@ -52,9 +52,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             UsernamePasswordAuthenticationFilter.class)
         .authorizeRequests()
         .antMatchers("/api/**/auth/**").permitAll()
-        .antMatchers(HttpMethod.GET,"/api/**/orders").hasRole("ADMIN")
-        .antMatchers(HttpMethod.POST,"/api/**/orders").hasAnyRole("ADMIN", "USER")
-        .antMatchers("/api/**/user").hasRole("ADMIN")
+        .antMatchers(HttpMethod.GET, "/api/**/orders").hasRole("ADMIN")
+        .antMatchers(HttpMethod.POST, "/api/**/orders").hasAnyRole("ADMIN", "USER")
+        .antMatchers("/api/**/user", "/api/**/user/**").hasRole("ADMIN")
         .antMatchers("/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**",
             "/swagger/**").permitAll()
         .anyRequest().permitAll();
