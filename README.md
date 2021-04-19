@@ -136,11 +136,11 @@ Swagger 페이지 : http://localhost:8080/swagger-ui.html
 #### 5.4 API 리스트
 
 |API                |HTTP 메서드 | 권한                   |설명                            |
-|-------------------|-----------|-----------------------|--------------------------------|
-|/api/v1/auth/join  |POST      |Anonymous               |회원가입을 수행합니다              |
-|/api/v1/auth/login |POST      |Anonymous               |로그인을 수행합니다                |
-|/api/v1/auth/logout|POST      |Anonymous               |로그아웃을 수행합니다              |
-|/api/v1/orders     |GET       |Admin                   |사용자의 주문정보를 조회합니다      |
-|/api/v1/orders     |POST      |Admin, User             |로그인된 사용자의 주문을 등록합니다 |
-|/api/v1/user       |GET       |Admin                   |사용자 목록을 조회합니다           |
-|/api/v1/email      |GET       |Admin                   |사용자를 조회합니다               |
+|--------------------|-----------|-----------------------|--------------------------------|
+|/api/v1/auth/join   |POST      |Anonymous               |회원가입을 수행합니다              |
+|/api/v1/auth/login  |POST      |Anonymous               |로그인을 수행합니다                |
+|/api/v1/auth/logout |POST      |Anonymous               |로그아웃을 수행합니다              |
+|/api/v1/orders      |GET       |Admin                   |사용자의 주문정보를 조회합니다      |
+|/api/v1/orders      |POST      |Admin, User             |로그인된 사용자의 주문을 등록합니다 |
+|/api/v1/user        |GET       |Admin                   |사용자 목록을 조회합니다           |
+|/api/v1/user/{email}|GET       |Admin                   |사용자를 조회합니다               |
