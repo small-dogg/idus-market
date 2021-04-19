@@ -55,8 +55,13 @@ public class OrdersService {
   }
 
   public static String shortUUID() {
-    return Long.toString(ByteBuffer.wrap(UUID.randomUUID().toString().getBytes()).getLong(),
-        Character.MAX_RADIX).toUpperCase();
+    while(true){
+      String uuid = Long.toString(ByteBuffer.wrap(UUID.randomUUID().toString().getBytes()).getLong(),
+          Character.MAX_RADIX).toUpperCase();
+      if(uuid.length()==12)return uuid;
+    }
+//    return Long.toString(ByteBuffer.wrap(UUID.randomUUID().toString().getBytes()).getLong(),
+//        Character.MAX_RADIX).toUpperCase();
   }
 
 }
