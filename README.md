@@ -30,13 +30,13 @@ idus's market service
 $ docker-compose -f docker-compose.yml up -d
 ```
 
-인증 토큰을 관리하는 Redis 서버와 관계형 데이터 저장목적의 MySQL가 자동으로 배포됩니다.
+인증 토큰을 관리하는 Redis 서버와 관계형 데이터 저장목적의 MySQL 자동으로 배포됩니다.
 
 mysql 사용자 인증정보
 
 |username | password |
 |---------|----------|
-|syaprk   |qwe1212!Q |
+|sypark   |qwe1212!Q |
 
 위 사용자는 MySQL 초기화 sql에 의해, idus_market_% 의 접근권한을 가지고있습니다.
 
