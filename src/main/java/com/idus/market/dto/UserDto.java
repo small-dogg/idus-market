@@ -81,7 +81,7 @@ public class UserDto {
     @Pattern(regexp = "^\\d{3}-\\d{3,4}-\\d{4}$", message = "휴대폰 번호는 010-1234-5678 형태로 표기하세요")
     private String phoneNumber;
 
-    @NotBlank(message = "성별을 선택하십시오")
+    // TODO : add Validating Pattern
     private GenderType gender;
 
     @ApiModelProperty(hidden = true)
