@@ -22,14 +22,14 @@ public class OrdersController {
   private final OrdersService ordersService;
 
   @ApiOperation(value = "단일 회원의 주문 목록 조회", notes = "단일 회원의 주문 목록을 조회합니다")
-  @ApiImplicitParam(name = "email", value = "이메일")
+  @ApiImplicitParam(name = "email", value = "이메일", required = true)
   @GetMapping
   private List<Orders> getOrders(String email) {
     return ordersService.findAllByEmail(email);
   }
 
   @ApiOperation(value = "주문 생성", notes = "주문을 생성합니다")
-  @ApiImplicitParam(name = "name", value = "주문 상품")
+  @ApiImplicitParam(name = "name", value = "주문 상품", required = true)
   @PostMapping
   private CommonResponse createOrders(createOrdersDto createOrdersDto) {
 
