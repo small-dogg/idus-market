@@ -2,6 +2,7 @@ package com.idus.market.domain.order;
 
 import com.idus.market.domain.BaseTimeEntity;
 import com.idus.market.dto.OrdersDto.createOrdersDto;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,10 +23,13 @@ public class Orders extends BaseTimeEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Column(length = 12, nullable = false)
   private String orderId;
 
+  @Column(length = 100, nullable = false)
   private String name;
 
+  @Column(nullable = false)
   private Long userId;
 
   public Orders(createOrdersDto createOrdersDto) {
