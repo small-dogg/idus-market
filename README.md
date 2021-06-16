@@ -1,8 +1,6 @@
-# idus-market
+# Small-dogg-market
 
-idus's market service
-
-이 프로젝트는 idus 인증서비스 및 회원정보, 주문정보 조회에 대한 API를 제공합니다.
+이 프로젝트는 인증서비스 및 회원정보, 주문정보 조회에 대한 Swagger UI 2.0 기반 API를 제공합니다.
 
 ---
 
